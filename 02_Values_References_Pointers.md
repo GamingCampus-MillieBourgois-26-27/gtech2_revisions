@@ -1,7 +1,5 @@
 # Révision 2 : Values, references et pointers
 
-**GTech 2 · C++20 · Rappels et exercices**
-
 [← Révision 1](./01_Functions_Files_Compiler.md) · [Sommaire](./README.md) · [Révision 3 →](./03_Const_Auto_Templates.md)
 
 ## Objectifs
@@ -15,7 +13,7 @@
 **Prérequis :** Avoir revu les functions et les return values dans la [révision 1](01_Functions_Files_Compiler.md).
 
 <details>
-<summary>Sommaire de la fiche</summary>
+<summary>📑 Sommaire de la fiche</summary>
 
 - [Vocabulaire](#vocabulaire)
 - [1. Une value, une copy, une reference, un pointer](#1-une-value-une-copy-une-reference-un-pointer)
@@ -80,6 +78,8 @@ Une reference n'est pas une copy de l'integer. Un pointer n'est pas l'integer ve
 | `int* lifePtr = &life;` | `*` fait partie du type : pointer vers un integer. `&life` obtient une address. |
 | `*lifePtr = 50;` | `*` effectue un dereference du pointer pour accéder à l'integer désigné. |
 
+📖 **Pour approfondir :** [References, Hacking C++ (EN)](https://hackingcpp.com/cpp/lang/references) montre les effets d’une reference sur l’objet d’origine. [Pointers, Hacking C++ (EN)](https://hackingcpp.com/cpp/lang/pointers) complète avec les addresses, le dereference et le changement de cible.
+
 ## 2. Parameter passing : value, reference et pointer
 
 ```cpp
@@ -130,7 +130,9 @@ int main()
 | `int& lifeReference` | Une reference vers l'integer d'origine. | L'integer d'origine diminue. |
 | `int* lifePtr` | Une copy de l’address. | `(*lifePtr)--` diminue l'integer désigné. |
 
-**Le pointer est lui aussi passé par value (pass by value).** L’address stockée est copiée, mais les deux pointers désignent le même integer. Modifier cet integer reste donc visible après l'appel.
+> [!IMPORTANT]
+> **Le pointer est lui aussi passé par value.**
+> L’address stockée est copiée, mais les deux pointers désignent le même integer. Modifier cet integer reste donc visible après l’appel.
 
 `LoseLifeReference(life)` fonctionne aussi : il n'est pas nécessaire de créer `lifeRef` avant l'appel. Le type du parameter détermine le passage par reference (pass by reference).
 
@@ -216,7 +218,9 @@ if (target != nullptr)
 }
 ```
 
-**Non nul ne signifie pas forcément valide.** Un pointer peut encore contenir l’address d'une variable qui n'existe plus. Le test contre `nullptr` ne détecte pas ce problème.
+> [!WARNING]
+> **Non nul ne signifie pas forcément valide.**
+> Un pointer peut encore contenir l’address d’une variable qui n’existe plus. Le test contre `nullptr` ne détecte pas ce problème.
 
 ## 6. Scope et lifetime
 
@@ -259,6 +263,10 @@ Avec un pointer :
 | `int* const` | Oui | Non |
 
 Ces droits concernent cet accès à l'object. Une const reference ne rend pas nécessairement l'object d'origine constant.
+
+🖼️ **Comparer les écritures de `const` :** [East const vs. const West, Hacking C++ (EN)](https://hackingcpp.com/cpp/design/east_vs_west_const) met côte à côte `const int*`, `int const*` et `int* const` pour distinguer ce qui est constant.
+
+---
 
 ## Exercices
 
@@ -417,14 +425,19 @@ Pour C, expliquer d'abord pourquoi le résultat attendu n'est pas obtenu. En bon
 
 Répartir les functions dans `Life.h` et `Life.cpp`. Conserver les appels dans `main.cpp`. Mettre une include guard ou un `#pragma once` dans le header et vérifier que les declarations correspondent aux definitions.
 
+---
+
 ## À retenir
 
-- Une value passée par copy est indépendante de la variable d’origine.
-- Une reference donne accès au même objet et ne peut pas changer de cible.
-- Un pointer contient une address ; `*pointer` accède à l’objet désigné.
-- Un pointer passé par value est lui aussi copié.
-- `nullptr` signale l’absence de cible ; un pointer non nul peut quand même être invalide.
-- Le scope d’un nom et la lifetime d’un objet sont deux notions différentes.
+> [!TIP]
+> **Les repères à garder**
+>
+> - Une value passée par copy est indépendante de la variable d’origine.
+> - Une reference donne accès au même objet et ne peut pas changer de cible.
+> - Un pointer contient une address ; `*pointer` accède à l’objet désigné.
+> - Un pointer passé par value est lui aussi copié.
+> - `nullptr` signale l’absence de cible ; un pointer non nul peut quand même être invalide.
+> - Le scope d’un nom et la lifetime d’un objet sont deux notions différentes.
 
 ## Avant de terminer
 
@@ -435,11 +448,13 @@ Répartir les functions dans `Life.h` et `Life.cpp`. Conserver les appels dans `
 - [ ] Je ne fais pas de dereference sur un null pointer ou un dangling pointer.
 - [ ] Je sais récupérer une return value et tester les cas limites.
 
+---
+
 ## Références
 
-- [References — Microsoft Learn](https://learn.microsoft.com/fr-fr/cpp/cpp/references-cpp?view=msvc-170)
-- [Pointers — Microsoft Learn](https://learn.microsoft.com/fr-fr/cpp/cpp/pointers-cpp?view=msvc-170)
-- [Scope — Microsoft Learn](https://learn.microsoft.com/en-us/cpp/cpp/scope-visual-cpp?view=msvc-170)
+- [References : donner un autre nom à un objet](https://learn.microsoft.com/fr-fr/cpp/cpp/references-cpp?view=msvc-170) : L’initialization d’une reference et les différences avec un pointer, notamment l’impossibilité de changer de cible.
+- [Pointers : stocker une address et accéder à un objet](https://learn.microsoft.com/fr-fr/cpp/cpp/pointers-cpp?view=msvc-170) : Les bases des pointers, leur declaration et leur utilisation pour accéder à des données.
+- [Scope : où un nom est-il utilisable ?](https://learn.microsoft.com/en-us/cpp/cpp/scope-visual-cpp?view=msvc-170) : Les différentes portées et les règles de visibilité des noms dans le programme.
 
 ---
 

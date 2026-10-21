@@ -1,7 +1,5 @@
 # Révision 3 : const, auto et templates
 
-**GTech 2 · C++20 · Rappels et exercices**
-
 [← Révision 2](./02_Values_References_Pointers.md) · [Sommaire](./README.md)
 
 ## Objectifs
@@ -15,7 +13,7 @@
 **Prérequis :** Avoir revu les copies, references, pointers et lifetimes dans la [révision 2](02_Values_References_Pointers.md).
 
 <details>
-<summary>Sommaire de la fiche</summary>
+<summary>📑 Sommaire de la fiche</summary>
 
 - [1. Donner du sens au code](#1-donner-du-sens-au-code)
 - [2. Notre exemple : Player](#2-notre-exemple--player)
@@ -113,7 +111,9 @@ void SetName(const std::string& newName)
 
 Passer une string existante par reference évite une copy pour construire le parameter. En revanche, `name = newName` copie ensuite son contenu dans le member.
 
-**C’est la reference qui évite ici la copy du parameter, pas le const.**
+> [!IMPORTANT]
+> **Distinguer les deux rôles**
+> La reference évite ici la copy du parameter. `const` interdit de modifier la string par cet accès.
 
 ### Le return type : `const std::string&`
 
@@ -146,6 +146,8 @@ player.GetName();         // Autorisé.
 ```
 
 Les deux `const` de `GetName()` n’ont donc pas le même rôle.
+
+📖 **Pour approfondir :** [Basic Custom Types / Classes, Hacking C++ (EN)](https://hackingcpp.com/cpp/lang/custom_type_basics), section **const Member Functions**, illustre les appels autorisés sur un objet const et les modifications refusées dans une member function const.
 
 ## 4. `auto` déduit un type précis
 
@@ -189,6 +191,8 @@ player.SetName("Chris");
 // nameRef permet maintenant de lire "Chris".
 ```
 
+📖 **Déplier la type deduction :** [Type deduction with pointers, references, and const, LearnCpp (EN)](https://www.learncpp.com/cpp-tutorial/type-deduction-with-pointers-references-and-const/) détaille ce que `auto` conserve ou retire et ce que change `auto&`.
+
 ## 5. Default arguments d’une function
 
 Notre setter initial exige un argument :
@@ -226,6 +230,8 @@ void SpawnPlayer(int life = 100, int level = 1);
 // Incorrect : level n’a pas de default argument.
 // void SpawnPlayer(int life = 100, int level);
 ```
+
+📖 **Exemples et règles :** [Default arguments, LearnCpp (EN)](https://www.learncpp.com/cpp-tutorial/default-arguments/) explique les arguments omis, leur ordre et leur emplacement dans une declaration ou un header.
 
 ## 6. Un class template : `Vector<T>`
 
@@ -272,7 +278,9 @@ Cela ne signifie pas que les references sont interdites comme template arguments
 
 ### Ce `Vector` est un exemple pédagogique
 
-Il ne réserve aucune mémoire et ne libère rien. Il ne fournit pas les fonctionnalités de `std::vector`.
+> [!NOTE]
+> **Un modèle volontairement minimal**
+> Ce `Vector` ne réserve aucune mémoire et ne libère rien. Il ne fournit pas les fonctionnalités de `std::vector`.
 
 ```cpp
 int values[] = { 10, 20, 30 };
@@ -290,6 +298,8 @@ Ici :
 - Les indices doivent rester dans les limites.
 - `count` n’est pas calculé ni mis à jour automatiquement.
 - Les initializations `nullptr` et `0` évitent de laisser les members avec des values indéterminées.
+
+🖼️ **Pour une autre présentation :** [Templates, Hacking C++ (EN)](https://hackingcpp.com/cpp/lang/templates) propose une introduction en slides à la programmation avec des templates.
 
 ## 7. Default template arguments
 
@@ -367,9 +377,11 @@ Attention :
 std::unique_ptr<Player> player;
 ```
 
-Cette ligne crée un smart pointer vide. Elle ne crée pas de `Player`.
+> [!WARNING]
+> **Un smart pointer vide ne contient pas de Player.**
+> Cette ligne ne crée pas de `Player`. Remplacer `.` par `->` ne suffit donc pas : il faut aussi une instance valide avant l’accès.
 
-Remplacer `.` par `->` ne suffit donc pas : il faut aussi une instance valide avant l’accès.
+---
 
 ## Exercices
 
@@ -473,14 +485,20 @@ player->SetName("Millie");
 - Proposer une correction avec `std::make_unique`.
 - Proposer une autre version avec une instance directe.
 
+---
+
 ## À retenir
 
-- `const` exprime une restriction, pas une promesse de performance.
-- `auto` déduit un type précis.
-- `auto` seul et `auto&` n’ont pas les mêmes effets sur les copies.
-- Un template décrit une famille de types ou de functions.
-- Un default argument fournit un choix lorsqu’un argument est omis.
-- Le compiler détecte certaines erreurs ; les résultats, limites et lifetimes restent à vérifier.
+> [!TIP]
+> **Les repères à garder**
+>
+> - `const` exprime une restriction, pas une promesse de performance.
+> - `auto` déduit un type précis.
+> - `auto` seul et `auto&` n’ont pas les mêmes effets sur les copies.
+> - Un template décrit une famille de types ou de functions.
+> - Un default argument fournit un choix lorsqu’un argument est omis.
+> - Le compiler détecte certaines erreurs ; les résultats, limites et lifetimes restent à vérifier.
+
 ## Avant de terminer
 
 - [ ] Je peux expliquer le rôle de chaque `const` dans `Player`.
@@ -490,13 +508,15 @@ player->SetName("Millie");
 - [ ] Je peux remplacer `T` pour retrouver le type de `elements`.
 - [ ] Je sais pourquoi un smart pointer vide ne permet pas d’accéder à un `Player`.
 
+---
+
 ## Références
 
-- [const — Microsoft Learn](https://learn.microsoft.com/fr-fr/cpp/cpp/const-cpp?view=msvc-170)
-- [auto — Microsoft Learn](https://learn.microsoft.com/fr-fr/cpp/cpp/auto-cpp?view=msvc-170)
-- [Default arguments — Microsoft Learn](https://learn.microsoft.com/fr-fr/cpp/cpp/default-arguments?view=msvc-170)
-- [Templates — Microsoft Learn](https://learn.microsoft.com/en-us/cpp/cpp/templates-cpp?view=msvc-170)
-- [Class template argument deduction — C++ working draft](https://eel.is/c++draft/over.match.class.deduct)
+- [const : restreindre les modifications](https://learn.microsoft.com/fr-fr/cpp/cpp/const-cpp?view=msvc-170) : Les usages de const sur les variables, les pointers et les member functions.
+- [auto : déduire un type depuis une initialization](https://learn.microsoft.com/fr-fr/cpp/cpp/auto-cpp?view=msvc-170) : Les règles de type deduction et des exemples avec const, references et pointers.
+- [Default arguments : permettre des arguments omis](https://learn.microsoft.com/fr-fr/cpp/cpp/default-arguments?view=msvc-170) : La syntaxe, la visibilité et les règles d’utilisation des arguments par défaut dans les functions.
+- [Templates : écrire du code paramétré par des types](https://learn.microsoft.com/en-us/cpp/cpp/templates-cpp?view=msvc-170) : La définition et l’utilisation des function templates et class templates, avec des paramètres par défaut.
+- [CTAD : comment les arguments d’un class template sont déduits](https://eel.is/c++draft/over.match.class.deduct) : Les règles formelles des deduction guides dans le C++ working draft. Lecture avancée pour approfondir l’exemple Vector.
 
 ---
 

@@ -1,7 +1,5 @@
 # Révision 1 : Functions, files et compiler
 
-**GTech 2 · C++20 · Rappels et exercices**
-
 [Sommaire](./README.md) · [Révision 2 →](./02_Values_References_Pointers.md)
 
 ## Objectifs
@@ -14,7 +12,7 @@
 **Prérequis :** Savoir déclarer une variable, écrire une expression et lire un `main` simple.
 
 <details>
-<summary>Sommaire de la fiche</summary>
+<summary>📑 Sommaire de la fiche</summary>
 
 - [1. Extraire une function de `main`](#1-extraire-une-function-de-main)
 - [2. Declaration et definition](#2-declaration-et-definition)
@@ -102,6 +100,8 @@ Les variables locales `value` et `result` ne sont pas accessibles directement de
 
 Dans `main`, `return 0;` indique une fin normale du programme.
 
+📖 **Pour approfondir :** [Functions (Basics), Hacking C++ (EN)](https://hackingcpp.com/cpp/lang/function_basics) pour revoir les appels, parameters et return values. Alternative en français : [Découpez votre programme en fonctions, OpenClassrooms (FR)](https://openclassrooms.com/fr/courses/1894236-apprenez-a-programmer-en-c/7533556-decoupez-votre-programme-en-fonctions).
+
 ## 2. Declaration et definition
 
 ### Declaration : annoncer la function
@@ -134,6 +134,8 @@ int DisplayTwice(int value)
 
 La definition contient le **function body**, entre accolades.
 
+> [!NOTE]
+> **Declaration ou definition ?**
 > Une definition est aussi une declaration. Si la definition est visible avant l’appel, une declaration séparée n’est pas nécessaire.
 
 ### Function signature
@@ -242,6 +244,8 @@ int main()
 
 Cette organisation concerne notre function ordinaire. Un header peut aussi contenir certaines definitions, notamment des classes, des templates ou des functions `inline`.
 
+📖 **Exemple guidé :** [Utilisez plusieurs fichiers, OpenClassrooms (FR)](https://openclassrooms.com/fr/courses/1894236-apprenez-a-programmer-en-c/7565936-utilisez-plusieurs-fichiers) reprend la séparation entre headers, source files et prototypes.
+
 ## 5. Preprocessor et `#include`
 
 Les lignes comme `#include`, `#define` ou `#ifndef` sont des **directives du preprocessor**.
@@ -255,9 +259,11 @@ Avec les inclusions classiques utilisées ici, `#include` insère le contenu du 
 
 Les chevrons et les guillemets utilisent des règles de recherche différentes. On utilise généralement les guillemets pour les headers du projet.
 
-**Inclure `Display.h` ne demande pas au compiler de compiler automatiquement `Display.cpp`.**
+> [!IMPORTANT]
+> **Inclure un header ne compile pas son source file.**
+> `Display.cpp` doit aussi participer au build pour fournir la definition de la function.
 
-L’inclusion rend la declaration visible. La compilation du source file fournit son implémentation sous forme de object code.
+L’inclusion rend la declaration visible. La compilation du source file fournit son implémentation sous forme d’object code.
 
 ## 6. Include guard et `#pragma once`
 
@@ -319,6 +325,15 @@ flowchart TD
     B["Libraries nécessaires"] --> L
 
     L --> E["Exécutable"]
+
+    classDef sources fill:#dbeafe,stroke:#2563eb,color:#172554
+    classDef objects fill:#fef3c7,stroke:#d97706,color:#451a03
+    classDef linking fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef result fill:#dcfce7,stroke:#16a34a,color:#052e16
+    class H,M,D,PM,PD sources
+    class OM,OD objects
+    class L,B linking
+    class E result
 ```
 
 | Étape | Travail |
@@ -328,6 +343,8 @@ flowchart TD
 | **Linker** | Réunir objets et libraries, et résoudre les references entre eux |
 
 Les object files portent généralement l’extension `.obj` sous MSVC et `.o` sous Linux. Ils ne sont pas encore des exécutables autonomes.
+
+🖼️ **Voir le build en images :** [Separate Compilation, Hacking C++ (EN)](https://hackingcpp.com/cpp/lang/separate_compilation) propose des slides et un diagramme pour relier headers, source files, object files et exécutable.
 
 ## 8. Declaration sans definition : pourquoi une erreur LNK ?
 
@@ -368,7 +385,11 @@ int DisplayTwice(double value) // Autre overload.
 
 Définir la version `double` ne fournit pas la definition de la version `int`.
 
-**`#pragma once` ne résout pas une definition dupliquée entre plusieurs translation units.** Pour notre function non `inline`, conserver la declaration dans le `.h` et une seule definition dans un `.cpp`.
+> [!WARNING]
+> **Une protection locale à chaque translation unit**
+> `#pragma once` ne résout pas une definition dupliquée entre plusieurs translation units. Pour notre function non `inline`, conserver la declaration dans le `.h` et une seule definition dans un `.cpp`.
+
+---
 
 ## Exercices
 
@@ -400,13 +421,18 @@ Répartir le programme entre `main.cpp`, `Display.h` et `Display.cpp`.
 
 Pour chaque cas, expliquer si l’erreur vient du compiler ou du linker et proposer une correction.
 
+---
+
 ## À retenir
 
-- Une declaration rend la function connue avant l’appel.
-- Une definition fournit son function body.
-- Un header inclus ne provoque pas la compilation du `.cpp` correspondant.
-- Chaque translation unit est compilée séparément, puis le linker réunit les object files.
-- Une include guard protège un header dans une translation unit.
+> [!TIP]
+> **Les repères à garder**
+>
+> - Une declaration rend la function connue avant l’appel.
+> - Une definition fournit son function body.
+> - Un header inclus ne provoque pas la compilation du `.cpp` correspondant.
+> - Chaque translation unit est compilée séparément, puis le linker réunit les object files.
+> - Une include guard protège un header dans une translation unit.
 
 ## Avant de terminer
 
@@ -416,14 +442,16 @@ Pour chaque cas, expliquer si l’erreur vient du compiler ou du linker et propo
 - [ ] Je sais expliquer la différence entre afficher et retourner.
 - [ ] Je sais retirer temporairement la definition et identifier l’étape qui échoue.
 
+---
+
 ## Références
 
-- [Headers](https://learn.microsoft.com/fr-fr/cpp/cpp/header-files-cpp?view=msvc-170)
-- [Translation units et linking](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp)
-- [Functions C++](https://learn.microsoft.com/en-us/cpp/cpp/functions-cpp?view=msvc-170)
-- [Pragma once](https://learn.microsoft.com/en-us/cpp/preprocessor/once?view=msvc-170)
-- [Erreur LNK2019](https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk2019?view=msvc-170)
-- [Erreur LNK2005](https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk2005?view=msvc-170)
+- [Headers : organiser declarations et inclusions](https://learn.microsoft.com/fr-fr/cpp/cpp/header-files-cpp?view=msvc-170) : Comment partager des declarations entre plusieurs source files et organiser les headers.
+- [Translation units, linkage et One Definition Rule](https://learn.microsoft.com/en-us/cpp/cpp/program-and-linkage-cpp) : Pourquoi les files sont compilés séparément et quelles règles encadrent les declarations et definitions.
+- [Functions : parameters, appels et return values](https://learn.microsoft.com/en-us/cpp/cpp/functions-cpp?view=msvc-170) : Les éléments d’une function, sa declaration, sa definition et les informations transmises à l’appel.
+- [#pragma once : éviter les inclusions répétées](https://learn.microsoft.com/en-us/cpp/preprocessor/once?view=msvc-170) : Le fonctionnement de cette protection et ses liens avec les include guards.
+- [LNK2019 : unresolved external symbol](https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk2019?view=msvc-170) : Les causes d’une definition introuvable au linking : source file absent du build, signature différente ou library manquante.
+- [LNK2005 : symbol already defined](https://learn.microsoft.com/en-us/cpp/error-messages/tool-errors/linker-tools-error-lnk2005?view=msvc-170) : Les causes des definitions multiples et les corrections possibles quand un symbole est défini plusieurs fois.
 
 ---
 
