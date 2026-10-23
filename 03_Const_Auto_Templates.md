@@ -1,6 +1,6 @@
 # Révision 3 : const, auto et templates
 
-[← Révision 2](./02_Values_References_Pointers.md) · [Sommaire](./README.md)
+[← Révision 2](./02_Values_References_Pointers.md) · [Sommaire](./README.md) · [Révision 4 →](./04_Design_Method.md)
 
 ## Objectifs
 
@@ -520,4 +520,4 @@ player->SetName("Millie");
 
 ---
 
-[← Révision 2](./02_Values_References_Pointers.md) · [Sommaire](./README.md)
+[← Révision 2](./02_Values_References_Pointers.md) · [Sommaire](./README.md) · [Révision 4 →](./04_Design_Method.md)

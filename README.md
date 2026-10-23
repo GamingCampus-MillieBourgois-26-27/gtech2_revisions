@@ -11,6 +11,7 @@ Les explications sont en français et les termes techniques restent en anglais :
 | **01** | [Functions, files et compiler](./01_Functions_Files_Compiler.md) | Parameters, return values, declarations et definitions, headers, preprocessor, compiler, linker. |
 | **02** | [Values, references et pointers](./02_Values_References_Pointers.md) | Copies, addresses, parameter passing, `nullptr`, scope, lifetime, dangling pointers. |
 | **03** | [const, auto et templates](./03_Const_Auto_Templates.md) | Const correctness, type deduction, default arguments, class templates, premiers repères dans la standard library. |
+| **04** | [Réfléchir avant de coder](./04_Design_Method.md) | Scénarios, responsabilités, class diagrams, inheritance, controllers, ownership et object slicing. |
 
 **Commencer par la [révision 1 →](./01_Functions_Files_Compiler.md)**
 
@@ -63,5 +64,6 @@ Chaque fiche suit le même parcours :
 - [ ] **Jour 1** : Je sais organiser une function entre un header et un source file, puis identifier une erreur du compiler ou du linker.
 - [ ] **Jour 2** : Je sais prévoir les effets d’une copy, d’une reference et d’un pointer sur la variable d’origine.
 - [ ] **Jour 3** : Je sais lire les `const`, prévoir les types déduits et utiliser un template avec ou sans default argument.
+- [ ] **Jour 4** : Je sais partir d’un scénario, répartir les responsabilités et lire un class diagram avant de commencer l’implémentation.
 
 Les références pour approfondir se trouvent à la fin de chaque fiche.
